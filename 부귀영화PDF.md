@@ -1,6 +1,5 @@
 ## <a id="anchor_report"></a>📑 보고서
 <details>
-  <summary>여기를 클릭하여 보고서 보기</summary>
   <img width="100%" alt="보고서 1" src="https://github.com/user-attachments/assets/a32d60b8-97f5-496b-afff-751d106c3c44" />
   <img width="100%" alt="보고서 2" src="https://github.com/user-attachments/assets/71f1d59f-c891-4507-a531-ddc9f00aa035" />
   <img width="100%" alt="보고서 3" src="https://github.com/user-attachments/assets/b43d1b12-06e1-4fed-b793-bb937877b813" />
