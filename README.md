@@ -13,7 +13,7 @@ Flask로 만든 영화 티켓 예매용 웹사이트
 2. [팀원 소개](#anchor_team)
 3. [개발 환경](#anchor_tools)
 4. [ERD](#anchor_erd)
-5. [폴더구조](#anchor_folder)
+5. [폴더 구조](#anchor_folder)
 6. [주요 기능](#anchor_features)
 7. [구현 화면](#anchor_view)
 8. [시작하기](#anchor_start)
@@ -68,7 +68,7 @@ movie/
 ├── setup.py                # 의존성 설치 + 마이그레이션 + 시드 데이터 일괄 실행
 ├── seed데이터순서.txt       # setup.py 사용법/시드 스크립트 추가 방법 안내
 ├── .flaskenv               # flask 환경 변수 실행               
-└── requirements.txt
+└── requirements.txt        # 필요 파이썬 패키지 목록 파일
 ```
 
 <br>
@@ -255,12 +255,14 @@ flask run
 
 ## <a id="anchor_report"></a>📑 보고서
 [부귀영화.pdf](https://github.com/user-attachments/files/33319327/default.pdf)
-<br><br>
 
-## <a id="anchor_add"></a>⚙ 추가하고 싶은 기능
+<br>
+
+## <a id="anchor_add"></a>💬 추가하고 싶은 기능
 - 모바일 티켓과 입장용 QR코드 생성
 - 소셜 간편 로그인(카카오톡, 네이버, 구글 계정 연동으로 1초 만에 회원가입 및 로그인)
-- 사용자 문의글(QnA)에 관리자가 직접 답변을 등록하고, 처리 상태를 '답변 완료'로 업데이트하는 기능
+- 사용자 문의글(Q&A)에 관리자가 직접 답변을 등록하고, 처리 상태를 '답변 완료'로 업데이트하는 기능
 - 관심 등록한 영화의 상영 스케줄이 오픈되거나 개봉일이 되었을 때 마이페이지 알림으로 안내
 - 회원가입 없이 휴대폰 번호와 비밀번호 입력만으로 예매 진행 및 조회
-<br><br>
+
+<br>
