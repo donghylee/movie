@@ -52,9 +52,24 @@ def create_app():
     @app.context_processor
     def inject_cart_count():
         from flask import g, session
-        if not g.user:
+        if not g.get('user'):
             return {'cart_count': 0}
         cart = session.get('cart', [])
         return {'cart_count': sum(item['qty'] for item in cart)}
+
+    # 요청별 메모리 사용량 로그 (원인 찾은 뒤 삭제)
+    try:
+        import resource
+    except ImportError:  # Windows(PyCharm 로컬 실행)에서는 건너뜀
+        resource = None
+
+    if resource:
+        from flask import request
+
+        @app.after_request
+        def log_memory(response):
+            peak_mb = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss / 1024
+            app.logger.warning(f"[MEM] {request.method} {request.path} -> peak {peak_mb:.0f}MB")
+            return response
 
     return app
