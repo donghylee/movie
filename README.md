@@ -254,7 +254,7 @@ flask run
 <br>
 
 ## <a id="anchor_report"></a>📑 보고서
-[부귀영화.pdf](https://github.com/user-attachments/files/33319327/default.pdf)
+[📑 보고서 보기](부귀영화PDF.md) · [📥 PDF 다운로드](https://github.com/user-attachments/files/33319327/default.pdf)
 
 <br>
 
