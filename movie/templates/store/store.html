@@ -37,6 +37,7 @@
             {% if p.price %}
             <div class="store-product-price">{{ '{:,}'.format(p.price) }}원</div>
             <form action="{{ url_for('store.cart_add') }}" method="post" class="store-cart-add-form">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                 <input type="hidden" name="product_id" value="{{ section.anchor }}-{{ loop.index0 }}">
                 <button type="submit" class="btn-store-buy">구매하기</button>
             </form>

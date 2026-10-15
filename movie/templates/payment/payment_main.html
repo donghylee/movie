@@ -426,7 +426,10 @@
     function verifyBgPassword(password) {
         return fetch(verifyPasswordUrl, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content,
+            },
             body: 'password=' + encodeURIComponent(password)
         }).then(function (res) { return res.json(); }).then(function (data) { return data.valid; });
     }

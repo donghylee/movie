@@ -162,6 +162,7 @@
                                                                             action="{{ url_for('mypage.cancel_reservation', reservation_id=r.id) }}"
                                                                             method="post"
                                                                             class="d-inline">
+                                                                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                                                             <button type="submit" class="btn btn-danger">확인</button>
                                                                         </form>
                                                                     </div>
@@ -373,6 +374,7 @@
                                                                 action="{{ url_for('mypage.cancel_purchase', purchase_id=p.id) }}"
                                                                 method="post"
                                                                 class="d-inline">
+                                                                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                                                 <button type="submit" class="btn btn-danger">확인</button>
                                                             </form>
                                                         </div>
@@ -541,6 +543,7 @@
                                 <form action="{{ url_for('auth.withdraw') }}"
                                       method="post"
                                       class="d-inline">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                                     <button type="submit"
                                             class="btn btn-danger">
                                         회원탈퇴

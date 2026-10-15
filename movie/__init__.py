@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import CSRFProtect
 from sqlalchemy import MetaData
 
 import config
@@ -15,6 +16,7 @@ naming_convention = {
 
 db = SQLAlchemy(metadata=MetaData(naming_convention=naming_convention))
 migrate = Migrate()
+csrf = CSRFProtect()
 
 # 애플리케이션 팩토리
 def create_app():
@@ -23,6 +25,7 @@ def create_app():
 
     # ORM 초기 설정
     db.init_app(app)
+    csrf.init_app(app)
     if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite'):
         migrate.init_app(app, db, render_as_batch=True)
     else:

@@ -109,6 +109,7 @@
         </div>
     </div>
     <form action="{{ url_for('booking.seats') }}" method="post" id="selectSeatForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" id="adult_tickets" name="adult_tickets" value=0 required>
         <input type="hidden" id="child_tickets" name="child_tickets" value=0 required>
         <input type="hidden" id="senior_tickets" name="senior_tickets" value=0 required>
@@ -134,6 +135,12 @@
     const noticeMsg = document.querySelector('.booking-notice p');
     const bookingTotal = document.getElementById('bookingTotal');
     const movieModal = new bootstrap.Modal(document.getElementById('movieModal'));
+
+    {% if seat_conflict %}
+    const modalBody = document.querySelector('#movieModal .modal-body');
+    modalBody.innerHTML = `<br><p style="text-align: center;">선택하신 좌석 중 일부가 다른 예매로 선점되었습니다. 좌석을 다시 선택해 주세요.</p><br>`
+    movieModal.show();
+    {% endif %}
 
     const seats = document.querySelectorAll('.seat-layout .layout-seat');
     seats.forEach(seat => {

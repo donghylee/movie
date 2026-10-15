@@ -85,6 +85,7 @@
         </div>
     </div>
     <form action="{{ url_for('booking.index') }}" method="post" id="selectScheduleForm">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
         <input type="hidden" id="selected_region" name="selected_region" value="" required>
         <input type="hidden" id="selected_theater" name="selected_theater" value="" required>
         <input type="hidden" id="selected_movie" name="selected_movie" value="" required>

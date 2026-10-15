@@ -161,6 +161,15 @@ def seats():
     if schedule_id is None:
         return redirect(url_for('booking.index'))
 
+    queried_schedule = Schedule.query.filter_by(id=schedule_id).first()
+
+    reserved_seats = []
+    for reservation in queried_schedule.reservations:
+        if reservation.canceled_at is None:
+            reservation_seats = reservation.seats.split(',')
+            reservation_seats = list(filter(None, reservation_seats))
+            reserved_seats += reservation_seats
+
     try:
         if request.method == 'POST':
             seats = request.form.get('booking_seats').split(',')
@@ -170,6 +179,10 @@ def seats():
                 return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', s)]
 
             seats = sorted(seats, key=natural_sort_key)
+
+            if set(seats) & set(reserved_seats):
+                return redirect(url_for('booking.seats', conflict=1))
+
             tickets = {
                 'adult': request.form.get('adult_tickets'),
                 'child': request.form.get('child_tickets'),
@@ -182,14 +195,6 @@ def seats():
     except:
         print(request.form.get('booking_seats'))
 
-    queried_schedule = Schedule.query.filter_by(id=schedule_id).first()
-
-    reserved_seats = []
-    for reservation in queried_schedule.reservations:
-        if reservation.canceled_at is None:
-            seats = reservation.seats.split(',')
-            seats = list(filter(None, seats))
-            reserved_seats += seats
     showtime_date = f'{queried_schedule.showtime.strftime("%Y.%m.%d")} ({korean_days(queried_schedule.showtime.strftime("%A"))})'
     end_time = queried_schedule.showtime + timedelta(minutes=queried_schedule.movie.runtime)
     showtime_time = f'{queried_schedule.showtime.strftime("%H:%M")} ~ {end_time.strftime("%H:%M")}'
@@ -212,5 +217,5 @@ def seats():
     }
 
     return render_template(
-        'booking/booking_seat.html', schedule=schedule
+        'booking/booking_seat.html', schedule=schedule, seat_conflict=request.args.get('conflict') == '1'
     )
