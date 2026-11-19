@@ -171,14 +171,14 @@ trailers = [
     Trailer(
         movie_id=9,
         title='메인 예고편',
-        image_url='/static/img/movie9/1.jpg',
+        image_url='/static/img/movie9/2.jpg',
         trailer_url='https://cf.lottecinema.co.kr//Media/MovieFile/MovieMedia/202609/24466_301_2.mp4',
         created_at=datetime.now()
     ),
     Trailer(
         movie_id=9,
         title='점프 스트리트 클립',
-        image_url='/static/img/movie9/1.jpg',
+        image_url='/static/img/movie9/3.jpg',
         trailer_url='https://cf.lottecinema.co.kr//Media/MovieFile/MovieMedia/202609/24466_301_3.mp4',
         created_at=datetime.now()
     ),
@@ -188,7 +188,7 @@ trailers = [
         movie_id=10,
         title='예고편',
         image_url='/static/img/movie10/1.jpg',
-        trailer_url='https://cf.lottecinema.co.kr//Media/MovieFile/MovieMedia/202609/24466_301_1.mp4',
+        trailer_url='https://cf.lottecinema.co.kr//Media/MovieFile/MovieMedia/202609/24872_301_1.mp4',
         created_at=datetime.now()
     ),
 

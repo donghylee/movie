@@ -1,6 +1,4 @@
 ## <a id="anchor_report"></a>📑 보고서
-<details>
-  <summary>여기를 클릭하여 보고서 보기</summary>
   <img width="100%" alt="보고서 1" src="https://github.com/user-attachments/assets/a32d60b8-97f5-496b-afff-751d106c3c44" />
   <img width="100%" alt="보고서 2" src="https://github.com/user-attachments/assets/71f1d59f-c891-4507-a531-ddc9f00aa035" />
   <img width="100%" alt="보고서 3" src="https://github.com/user-attachments/assets/b43d1b12-06e1-4fed-b793-bb937877b813" />
@@ -16,6 +14,5 @@
   <img width="100%" alt="보고서 13" src="https://github.com/user-attachments/assets/f87e9198-36e8-4be8-94b7-a77372353b79" />
   <img width="100%" alt="보고서 14" src="https://github.com/user-attachments/assets/78b99284-471a-4e54-ae20-1c424b124412" />
   <img width="100%" alt="보고서 15" src="https://github.com/user-attachments/assets/0228029e-eb87-4243-8764-20c33b7a0bc7" />
-</details>
 
 📥 [보고서 PDF 다운로드](https://github.com/user-attachments/files/33319327/default.pdf)

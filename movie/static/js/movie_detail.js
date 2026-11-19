@@ -140,7 +140,10 @@ var likeTag = document.getElementById('likeTag');
 if (likeTag) {
     if (likeTag.dataset.isUser == "true") {
         likeTag.addEventListener('click', function () {
-            fetch('/movie/' + likeTag.dataset.movieId + '/like', { method: 'POST' })
+            fetch('/movie/' + likeTag.dataset.movieId + '/like', {
+                method: 'POST',
+                headers: { 'X-CSRFToken': document.querySelector('meta[name="csrf-token"]').content },
+            })
                 .then(function (res) { return res.json(); })
                 .then(function (data) {
                     likeTag.classList.add('flash');

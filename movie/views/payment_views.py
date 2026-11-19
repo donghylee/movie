@@ -98,6 +98,17 @@ COUPON_COUNT_FIELDS = {
 }
 
 
+def _has_seat_conflict(context):
+    schedule = context['schedule']
+    if not schedule or not context['seats']:
+        return False
+    reserved_seats = set()
+    for reservation in schedule.reservations:
+        if reservation.canceled_at is None:
+            reserved_seats.update(filter(None, reservation.seats.split(',')))
+    return bool(reserved_seats & set(context['seats']))
+
+
 def _deduct_coupon(coupon_type):
     field = COUPON_COUNT_FIELDS.get(coupon_type)
     if not field or not g.user:
@@ -173,6 +184,17 @@ def mock_complete():
     coupon_discount = request.args.get('couponDiscount', default=0, type=int)
 
     context = _build_payment_context()
+
+    if _has_seat_conflict(context):
+        return render_template(
+            'payment/payment_complete.html',
+            success=False,
+            error={
+                'code': 'SEAT_CONFLICT',
+                'message': '선택하신 좌석 중 일부가 이미 예약되어 결제가 진행되지 않았습니다. 좌석을 다시 선택해 주세요.',
+            },
+        )
+
     payment = {
         'orderId': order_id,
         'method': method,
@@ -213,6 +235,18 @@ def toss_success():
     coupon = request.args.get('coupon', default='')
     coupon_discount = request.args.get('couponDiscount', default=0, type=int)
 
+    context = _build_payment_context()
+
+    if _has_seat_conflict(context):
+        return render_template(
+            'payment/payment_complete.html',
+            success=False,
+            error={
+                'code': 'SEAT_CONFLICT',
+                'message': '선택하신 좌석 중 일부가 이미 예약되어 결제가 진행되지 않았습니다. 좌석을 다시 선택해 주세요.',
+            },
+        )
+
     auth = base64.b64encode(f'{TOSS_SECRET_KEY}:'.encode()).decode()
     res = requests.post(
         TOSS_CONFIRM_URL,
@@ -226,7 +260,6 @@ def toss_success():
     if res.status_code == 200:
         payment = res.json()
         payment['approvedAt'] = datetime.fromisoformat(payment['approvedAt']).strftime('%Y-%m-%d %H:%M')
-        context = _build_payment_context()
 
         if g.user and 0 < applied_points <= g.user.point:
             g.user.point -= applied_points

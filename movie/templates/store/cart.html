@@ -24,6 +24,7 @@
                 <td class="text-center">{{ '{:,}'.format(item.price) }}원</td>
                 <td class="text-center">
                     <form action="{{ url_for('store.cart_update') }}" method="post" class="d-inline-flex align-items-center gap-2">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="product_id" value="{{ item.id }}">
                         <button type="submit" name="action" value="dec" class="btn btn-sm btn-outline-secondary">-</button>
                         <span>{{ item.qty }}</span>
@@ -33,6 +34,7 @@
                 <td class="text-center">{{ '{:,}'.format(item.price * item.qty) }}원</td>
                 <td class="text-center">
                     <form action="{{ url_for('store.cart_update') }}" method="post">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="product_id" value="{{ item.id }}">
                         <input type="hidden" name="action" value="remove">
                         <button type="submit" class="btn btn-sm btn-link text-secondary">삭제</button>
