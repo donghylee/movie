@@ -2,12 +2,45 @@ from flask import Blueprint, render_template, request, redirect, url_for, sessio
 from datetime import datetime, timedelta, time
 import re
 
+from movie import db
 from movie.filter import korean_days
 from movie.models import Theater, Auditorium, Schedule
 from movie.views.auth_views import login_required
 
-from sqlalchemy import func
+from sqlalchemy import func, insert
 bp = Blueprint('booking', __name__, url_prefix='/booking')
+
+
+def extend_schedules(days=35):
+    # 시드 일정이 만료되지 않도록 마지막 날 일정을 복사해 오늘+days일까지 채움
+    # shortcut: 동시 요청 시 중복 생성 가능, 다중 워커/트래픽 증가 시 유니크 제약 또는 락 추가
+    last = db.session.query(func.max(Schedule.showtime)).scalar()
+    target = datetime.now().date() + timedelta(days=days - 1)
+    if last is None or last.date() >= target:
+        return
+
+    last_day = datetime.combine(last.date(), time.min)
+    template = Schedule.query.filter(
+        Schedule.showtime >= last_day,
+        Schedule.showtime < last_day + timedelta(days=1)
+    ).all()
+
+    rows = []
+    day = max(last.date() + timedelta(days=1), datetime.now().date())
+    while day <= target:
+        for s in template:
+            rows.append({
+                'movie_id': s.movie_id,
+                'auditorium_id': s.auditorium_id,
+                'showtime': datetime.combine(day, s.showtime.time()),
+                'adult_price': s.adult_price,
+                'child_price': s.child_price,
+                'senior_price': s.senior_price,
+                'disabled_price': s.disabled_price
+            })
+        day += timedelta(days=1)
+    db.session.execute(insert(Schedule), rows)
+    db.session.commit()
 
 
 @bp.route('/', methods=['GET', 'POST'])
@@ -19,6 +52,8 @@ def index():
             return redirect(url_for('booking.seats'))
     except:
         print(request.form.get('selected_schedule'))
+
+    extend_schedules()
 
     regions_query = Theater.query.with_entities(Theater.region, func.count(Theater.region)).group_by(Theater.region).order_by(Theater.id).all()
     regions = []
